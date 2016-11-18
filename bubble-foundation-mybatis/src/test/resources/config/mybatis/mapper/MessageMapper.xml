@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bubble.foundation.mybatis.repositories.ICRUDRepository">
+
+	<insert id="save" parameterType="Message">
+		<![CDATA[
+			INSERT INTO
+			BUBBLE_SCHEMA.T_MESSAGE
+			(ID,
+			HEAD,
+			BODY,
+			CREATEDBY,
+			CREATEDDATE,
+			LASTMODIFIEDBY,
+			LASTMODIFIEDDATE)
+			VALUES(
+			#{id,jdbcType=CHAR},
+			#{head,jdbcType=VARCHAR},
+			#{body,jdbcType=VARCHAR},
+			#{createdBy,jdbcType=VARCHAR},
+			#{createdDate,jdbcType=VARCHAR},
+			#{lastModifiedBy,jdbcType=CHAR},
+			#{lastModifiedDate,jdbcType=CHAR}
+			)
+		]]>
+	</insert>
+
+	<select id="findAll" resultType="Message">
+		SELECT
+		    ID,
+		    HEAD,
+		    BODY,
+		    CREATEDBY,
+		    CREATEDDATE,
+		    LASTMODIFIEDBY,
+		    LASTMODIFIEDDATE
+		FROM
+		    BUBBLE_SCHEMA.T_MESSAGE 
+	</select>
+
+	<select id="findOne" resultType="Message" parameterType="Message">
+		SELECT
+		    ID,
+		    HEAD,
+		    BODY,
+		    CREATEDBY,
+		    CREATEDDATE,
+		    LASTMODIFIEDBY,
+		    LASTMODIFIEDDATE
+		FROM
+		    BUBBLE_SCHEMA.T_MESSAGE T
+		WHERE
+			T.ID = #{id,jdbcType=CHAR}
+	</select>
+
+	<select id="queryPage" parameterType="com.bubble.foundation.mybatis.page.Page" resultType="Message">
+		SELECT
+		    ID,
+		    HEAD,
+		    BODY,
+		    CREATEDBY,
+		    CREATEDDATE,
+		    LASTMODIFIEDBY,
+		    LASTMODIFIEDDATE
+		FROM
+		    BUBBLE_SCHEMA.T_MESSAGE T
+		WHERE
+		    1=1
+		<if test="params.id != null">
+			AND T.ID = #{params.id,jdbcType=CHAR}
+		</if>
+		<if test="params.head != null">
+			AND T.HEAD like #{params.head,jdbcType=VARCHAR}
+		</if>
+		<if test="params.body != null">
+			AND T.BODY like #{params.head,jdbcType=VARCHAR}
+		</if>
+		<if test="params.createdBy != null">
+			AND T.CREATEDBY = #{params.createdBy,jdbcType=VARCHAR}
+		</if>
+		<if test="params.createdDate != null">
+			AND T.CREATEDDATE = #{params.createdDate,jdbcType=VARCHAR}
+		</if>
+		<if test="params.lastModifiedBy != null">
+			AND T.LASTMODIFIEDBY = #{params.lastModifiedBy,jdbcType=CHAR}
+		</if>
+		<if test="params.lastModifiedDate != null">
+			AND T.LASTMODIFIEDDATE = #{params.lastModifiedDate,jdbcType=CHAR}
+		</if>
+	</select>
+	
+	<select id="query" parameterType="Message" resultType="Message">
+		SELECT
+		    ID,
+		    HEAD,
+		    BODY,
+		    CREATEDBY,
+		    CREATEDDATE,
+		    LASTMODIFIEDBY,
+		    LASTMODIFIEDDATE
+		FROM
+		    BUBBLE_SCHEMA.T_MESSAGE T
+		WHERE
+		    1=1
+		<if test="id != null">
+			AND T.ID = #{id,jdbcType=CHAR}
+		</if>
+		<if test="head != null">
+			AND T.HEAD like #{head,jdbcType=VARCHAR}
+		</if>
+		<if test="body != null">
+			AND T.BODY like #{head,jdbcType=VARCHAR}
+		</if>
+		<if test="createdBy != null">
+			AND T.CREATEDBY = #{createdBy,jdbcType=VARCHAR}
+		</if>
+		<if test="createdDate != null">
+			AND T.CREATEDDATE = #{createdDate,jdbcType=VARCHAR}
+		</if>
+		<if test="lastModifiedBy != null">
+			AND T.LASTMODIFIEDBY = #{lastModifiedBy,jdbcType=CHAR}
+		</if>
+		<if test="lastModifiedDate != null">
+			AND T.LASTMODIFIEDDATE = #{lastModifiedDate,jdbcType=CHAR}
+		</if>
+	</select>
+	
+
+	<update id="update" parameterType="Message">
+		UPDATE BUBBLE_SCHEMA.T_MESSAGE
+		<set>
+			<if test="head != null">HEAD = #{head,jdbcType=VARCHAR},</if>
+			<if test="body != null">BODY = #{body,jdbcType=VARCHAR},</if>
+			<if test="createdBy != null">CREATEDBY = #{createdBy,jdbcType=VARCHAR},</if>
+			<if test="createdDate != null">CREATEDDATE = #{createdDate,jdbcType=VARCHAR},</if>
+			<if test="lastModifiedBy != null">LASTMODIFIEDBY = #{lastModifiedBy,jdbcType=CHAR},</if>
+			<if test="lastModifiedDate != null">LASTMODIFIEDDATE = #{lastModifiedDate,jdbcType=CHAR}</if>
+		</set>
+		WHERE ID = #{id,jdbcType=CHAR}
+	</update>
+	
+	<delete id="delete" parameterType="Message">
+		DELETE
+		FROM
+		    BUBBLE_SCHEMA.T_MESSAGE T
+		WHERE 
+			ID = #{head,jdbcType=VARCHAR}
+	</delete>
+
+
+</mapper>

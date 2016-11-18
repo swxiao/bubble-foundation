@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:batch="http://www.springframework.org/schema/batch" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:hadoop="http://www.springframework.org/schema/hadoop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+						http://www.springframework.org/schema/context 
+					    http://www.springframework.org/schema/context/spring-context-4.2.xsd
+     					http://www.springframework.org/schema/hadoop 
+     					http://www.springframework.org/schema/hadoop/spring-hadoop.xsd">
+
+
+	<context:property-placeholder file-encoding="UTF-8" location="classpath*:prop/foundation-mapreduce.properties" />
+
+	<hadoop:file-system configuration-ref="hadoopConfiguration" close="true" />
+
+	<hadoop:configuration id="hadoopConfiguration">
+		fs.defaultFS=${hdfs.defaultFileSystem}
+		dfs.client.socket-timeout=600000
+		ha.zookeeper.quorum=${ha.zookeeper.quorum}
+		ha.zookeeper.session-timeout.ms=300000
+		dfs.nameservices=${hdfs.nameservice}
+		dfs.ha.namenodes.${hdfs.nameservice}=${hdfs.nodes}
+		dfs.namenode.rpc-address.${hdfs.nameservice}.${hdfs.namenode1}=${hdfs.namenode1.rpc-address}
+		dfs.namenode.http-address.${hdfs.nameservice}.${hdfs.namenode1}=${hdfs.namenode1.http-address}
+		dfs.namenode.rpc-address.${hdfs.nameservice}.${hdfs.namenode2}=${hdfs.namenode2.rpc-address}
+		dfs.namenode.http-address.${hdfs.nameservice}.${hdfs.namenode2}=${${hdfs.namenode2.http-address}}
+		dfs.client.failover.proxy.provider.hadoop-ha-cluster=org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider
+	</hadoop:configuration>
+
+	<hadoop:configuration id="mapreduceConfiguration" file-system-uri="${hdfs.defaultFileSystem}" configuration-ref="hadoopConfiguration">
+		yarn.resourcemanager.address=${mapreduce.resourceManager}
+		mapreduce.framework.name=yarn
+		mapreduce.jobhistory.address=${mapreduce.jobHistory}
+		mapreduce.job.jar=${mapreduce.jarpath}
+	</hadoop:configuration>
+
+
+	<bean class="com.bubble.foundation.mapreduce.MapReduceEntrance"></bean>
+</beans>

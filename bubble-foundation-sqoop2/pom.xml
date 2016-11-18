@@ -1,0 +1,30 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.bubble</groupId>
+		<artifactId>bubble-foundation</artifactId>
+		<version>1.0.0</version>
+	</parent>
+	<artifactId>bubble-foundation-sqoop2</artifactId>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.sqoop</groupId>
+			<artifactId>sqoop-client</artifactId>
+			<version>1.99.6</version>
+		</dependency>
+		<dependency>
+			<groupId>com.bubble</groupId>
+			<artifactId>bubble-foundation-common</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+	</dependencies>
+</project>
